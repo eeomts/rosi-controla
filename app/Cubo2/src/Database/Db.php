@@ -76,8 +76,10 @@ class Db
             'database' => $database['db'],
             'username' => Str::cuboDecode($database['user']),
             'password' => Str::cuboDecode($database['pass']),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            // utf8 e apelido de utf8mb3: conexao mb3 com tabela mb4 perde caractere
+            // e da illegal mix of collations. O ini manda; sem ele, utf8mb4.
+            'charset' => $database['charset'] ?? 'utf8mb4',
+            'collation' => $database['collation'] ?? 'utf8mb4_unicode_ci',
             // ex-setTablePrefix: o Eloquent tem prefixo nativo por conexao,
             // nao precisa mais do ATTR_TBLNAME_FORMAT do Doctrine.
             'prefix' => $config->getConfig('ini.cubo.table_prefix') ?: '',
