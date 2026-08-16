@@ -44,7 +44,7 @@ CREATE TABLE usuario (
   updated DATETIME NULL,
   deleted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
-  UNIQUE KEY uk_usuario_email (email)
+  KEY ix_usuario_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ---------------------------------------------------------------- ciclo e pedido
@@ -60,7 +60,7 @@ CREATE TABLE ciclo (
   updated DATETIME NULL,
   deleted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
-  UNIQUE KEY uk_ciclo_num_ano (num_ciclo, num_ano)
+  KEY ix_ciclo_num_ano (num_ciclo, num_ano)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -76,7 +76,7 @@ CREATE TABLE pedido (
   updated DATETIME NULL,
   deleted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
-  UNIQUE KEY uk_pedido_nome (nome),
+  KEY ix_pedido_nome (nome),
   KEY ix_pedido_ciclo (fk_ciclo),
   CONSTRAINT fk_pedido_ciclo FOREIGN KEY (fk_ciclo) REFERENCES ciclo (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
