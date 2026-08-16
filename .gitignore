@@ -1,0 +1,17 @@
+/vendor/
+/.phpunit.cache/
+/app/config.ini
+/app/logs/
+/app/Controla/public/upload/
+*.log
+.DS_Store
+Thumbs.db
+
+TODO/
+
+
+#claude
+.claude/
+
+#confis private
+config.ini
