@@ -2,13 +2,13 @@
 
 namespace Controla\Produto\Models;
 
-use Controla\Comum\Models\Aux;
+use Controla\Comum\Models\Auxiliar;
 
 /**
  * @package Controla
  * @author Mateus - github.com/eeomts
  */
-class Genero extends Aux
+class Genero extends Auxiliar
 {
     protected $table = 'genero_aux';
 }
