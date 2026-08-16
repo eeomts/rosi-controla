@@ -15,7 +15,9 @@ redir =
 url_login =
 
 [database.local]
-dbtype = mysql
+; dbtype = mariadb usa o driver nativo do illuminate 11 (MariaDbConnector)
+; charset/collation sao opcionais; sem eles o Db assume utf8mb4
+dbtype = mariadb
 host = localhost
 port = 3306
 db = 
@@ -23,7 +25,9 @@ user = "Y205dmRBPT0="
 pass = ""
 
 [database.wan]
-dbtype = mysql
+; dbtype = mariadb usa o driver nativo do illuminate 11 (MariaDbConnector)
+; charset/collation sao opcionais; sem eles o Db assume utf8mb4
+dbtype = mariadb
 host = 127.0.0.1
 port = 3306
 db = 
