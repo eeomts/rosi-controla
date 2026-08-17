@@ -1,6 +1,6 @@
 <?php
 
-namespace Controla\Comum\Models;
+namespace Controla\Models;
 
 use Cubo\Database\Model;
 use Illuminate\Database\Eloquent\Builder;

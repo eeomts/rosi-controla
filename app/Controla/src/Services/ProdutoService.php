@@ -1,10 +1,10 @@
 <?php
 
-namespace Controla\Produto;
+namespace Controla\Services;
 
-use Controla\Comum\Exceptions\DadosInvalidosException;
-use Controla\Produto\Models\Genero;
-use Controla\Produto\Models\Produto;
+use Controla\Utils\Exceptions\DadosInvalidosException;
+use Controla\Models\Genero;
+use Controla\Models\Produto;
 use RuntimeException;
 
 /**

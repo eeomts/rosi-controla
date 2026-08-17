@@ -1,10 +1,10 @@
 <?php
 
-namespace Controla\Tests\Ciclo;
+namespace Controla\Tests\Services;
 
-use Controla\Ciclo\CicloService;
-use Controla\Ciclo\Models\Ciclo;
-use Controla\Comum\Exceptions\DadosInvalidosException;
+use Controla\Services\CicloService;
+use Controla\Models\Ciclo;
+use Controla\Utils\Exceptions\DadosInvalidosException;
 use Controla\Tests\Support\ControlaSchema;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

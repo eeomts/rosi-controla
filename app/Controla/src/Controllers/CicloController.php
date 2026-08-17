@@ -1,6 +1,6 @@
 <?php
 
-namespace Controla\Ciclo;
+namespace Controla\Controllers;
 
 use Cubo\Controller;
 

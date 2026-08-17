@@ -14,7 +14,7 @@ use Cubo\Routing\Route;
  */
 final class FeatureMapper
 {
-    private const NAMESPACE_APP = 'Controla\\';
+    private const NAMESPACE_CONTROLLERS = 'Controla\\Controllers\\';
 
     /** Feature que responde pela raiz do site enquanto nao existe dashboard. */
     private const FEATURE_HOME = 'Ciclo';
@@ -26,7 +26,7 @@ final class FeatureMapper
     public function controllerClass(Route $route): string
     {
         $feature = $this->featureName($route);
-        $class = self::NAMESPACE_APP . $feature . '\\' . $feature . 'Controller';
+        $class = self::NAMESPACE_CONTROLLERS . $feature . 'Controller';
 
         if (!class_exists($class) || !is_subclass_of($class, Controller::class)) {
             throw ControllerNotFoundException::for($class);

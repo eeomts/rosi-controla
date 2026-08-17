@@ -1,13 +1,13 @@
 <?php
 
-namespace Controla\Tests\Pedido;
+namespace Controla\Tests\Services;
 
-use Controla\Ciclo\Models\Ciclo;
-use Controla\Comum\Exceptions\DadosInvalidosException;
-use Controla\Pedido\Models\Pedido;
-use Controla\Pedido\Models\VariacaoProduto;
-use Controla\Pedido\PedidoService;
-use Controla\Produto\Models\Produto;
+use Controla\Models\Ciclo;
+use Controla\Utils\Exceptions\DadosInvalidosException;
+use Controla\Models\Pedido;
+use Controla\Models\VariacaoProduto;
+use Controla\Services\PedidoService;
+use Controla\Models\Produto;
 use Controla\Tests\Support\ControlaSchema;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

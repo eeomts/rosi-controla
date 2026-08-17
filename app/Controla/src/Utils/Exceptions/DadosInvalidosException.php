@@ -1,6 +1,6 @@
 <?php
 
-namespace Controla\Comum\Exceptions;
+namespace Controla\Utils\Exceptions;
 
 use RuntimeException;
 

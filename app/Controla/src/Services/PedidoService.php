@@ -1,14 +1,14 @@
 <?php
 
-namespace Controla\Pedido;
+namespace Controla\Services;
 
-use Controla\Ciclo\Models\Ciclo;
-use Controla\Comum\Concerns\NormalizaDatas;
-use Controla\Comum\Concerns\NormalizaMoeda;
-use Controla\Comum\Exceptions\DadosInvalidosException;
-use Controla\Pedido\Models\Pedido;
-use Controla\Pedido\Models\VariacaoProduto;
-use Controla\Produto\Models\Produto;
+use Controla\Models\Ciclo;
+use Controla\Utils\Concerns\NormalizaDatas;
+use Controla\Utils\Concerns\NormalizaMoeda;
+use Controla\Utils\Exceptions\DadosInvalidosException;
+use Controla\Models\Pedido;
+use Controla\Models\VariacaoProduto;
+use Controla\Models\Produto;
 use RuntimeException;
 
 /**

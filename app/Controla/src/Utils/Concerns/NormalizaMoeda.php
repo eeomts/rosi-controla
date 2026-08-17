@@ -1,6 +1,6 @@
 <?php
 
-namespace Controla\Comum\Concerns;
+namespace Controla\Utils\Concerns;
 
 use Cubo\Tools\Number;
 

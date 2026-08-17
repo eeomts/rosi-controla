@@ -1,10 +1,10 @@
 <?php
 
-namespace Controla\Ciclo;
+namespace Controla\Services;
 
-use Controla\Ciclo\Models\Ciclo;
-use Controla\Comum\Concerns\NormalizaDatas;
-use Controla\Comum\Exceptions\DadosInvalidosException;
+use Controla\Models\Ciclo;
+use Controla\Utils\Concerns\NormalizaDatas;
+use Controla\Utils\Exceptions\DadosInvalidosException;
 use RuntimeException;
 
 /**

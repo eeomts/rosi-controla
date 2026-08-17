@@ -1,8 +1,8 @@
 <?php
 
-namespace Controla\Produto\Models;
+namespace Controla\Models;
 
-use Controla\Comum\Models\Auxiliar;
+use Controla\Models\Auxiliar;
 
 /**
  * @package Controla

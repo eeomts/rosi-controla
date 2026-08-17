@@ -1,8 +1,8 @@
 <?php
 
-namespace Controla\Pedido\Models;
+namespace Controla\Models;
 
-use Controla\Ciclo\Models\Ciclo;
+use Controla\Models\Ciclo;
 use Cubo\Database\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

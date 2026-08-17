@@ -1,9 +1,9 @@
 <?php
 
-namespace Controla\Pedido\Models;
+namespace Controla\Models;
 
-use Controla\Ciclo\Models\Ciclo;
-use Controla\Produto\Models\Produto;
+use Controla\Models\Ciclo;
+use Controla\Models\Produto;
 use Cubo\Database\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Controla\Tests\Ciclo\Models;
+namespace Controla\Tests\Models;
 
-use Controla\Ciclo\Models\Ciclo;
+use Controla\Models\Ciclo;
 use Controla\Tests\Support\ControlaSchema;
 use PHPUnit\Framework\TestCase;
 

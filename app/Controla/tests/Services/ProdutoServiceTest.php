@@ -1,11 +1,11 @@
 <?php
 
-namespace Controla\Tests\Produto;
+namespace Controla\Tests\Services;
 
-use Controla\Comum\Exceptions\DadosInvalidosException;
-use Controla\Produto\Models\Genero;
-use Controla\Produto\Models\Produto;
-use Controla\Produto\ProdutoService;
+use Controla\Utils\Exceptions\DadosInvalidosException;
+use Controla\Models\Genero;
+use Controla\Models\Produto;
+use Controla\Services\ProdutoService;
 use Controla\Tests\Support\ControlaSchema;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;

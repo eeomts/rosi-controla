@@ -1,9 +1,9 @@
 <?php
 
-namespace Controla\Tests\Produto\Models;
+namespace Controla\Tests\Models;
 
-use Controla\Produto\Models\Genero;
-use Controla\Produto\Models\Produto;
+use Controla\Models\Genero;
+use Controla\Models\Produto;
 use Controla\Tests\Support\ControlaSchema;
 use PHPUnit\Framework\TestCase;
 
