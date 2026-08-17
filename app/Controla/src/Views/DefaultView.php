@@ -16,7 +16,7 @@ final class DefaultView extends View
 
     private function __construct()
     {
-        $this->setTemplate('layout.html');
+        $this->setTemplate('layout.php');
     }
 
     public static function getInstance(): self
