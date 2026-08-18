@@ -15,3 +15,7 @@ TODO/
 
 #confis private
 config.ini
+.env
+
+#dados do docker
+/data/
