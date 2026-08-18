@@ -158,6 +158,52 @@ final class CicloServiceTest extends TestCase
         $this->service->salvar(999, $this->dados());
     }
 
+    public function testListaDoMaisNovoParaOMaisAntigo(): void
+    {
+        $this->service->salvar(null, $this->dados(['num_ciclo' => 11, 'num_ano' => 2026]));
+        $this->service->salvar(null, $this->dados(['num_ciclo' => 12, 'num_ano' => 2026]));
+        $this->service->salvar(null, $this->dados(['num_ciclo' => 1, 'num_ano' => 2027]));
+
+        $lista = $this->service->listar();
+
+        $this->assertSame(
+            [[2027, 1], [2026, 12], [2026, 11]],
+            $lista->map(fn(Ciclo $c) => [$c->num_ano, $c->num_ciclo])->all()
+        );
+    }
+
+    public function testEncontraPeloId(): void
+    {
+        $ciclo = $this->service->salvar(null, $this->dados());
+
+        $this->assertSame($ciclo->id, $this->service->encontrar($ciclo->id)->id);
+    }
+
+    public function testEncontrarSemIdReclama(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->service->encontrar(null);
+    }
+
+    public function testExcluiSemApagarALinha(): void
+    {
+        $ciclo = $this->service->salvar(null, $this->dados());
+
+        $excluido = $this->service->excluir($ciclo->id);
+
+        $this->assertTrue($excluido->trashed());
+        $this->assertCount(0, $this->service->listar());
+        $this->assertCount(1, Ciclo::withTrashed()->get());
+    }
+
+    public function testExcluirIdInexistenteReclama(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        $this->service->excluir(999);
+    }
+
     /**
      * @param array<string,mixed> $troca
      * @return array<string,mixed>

@@ -5,11 +5,10 @@ namespace Controla\Services;
 use Controla\Models\Ciclo;
 use Controla\Utils\Concerns\NormalizaDatas;
 use Controla\Utils\Exceptions\DadosInvalidosException;
+use Illuminate\Database\Eloquent\Collection;
 use RuntimeException;
 
 /**
- * Cadastro de ciclo: monta, valida e grava.
- *
  * @package Controla
  * @author Mateus - github.com/eeomts
  */
@@ -24,8 +23,6 @@ final class CicloService
     private const CAMPOS_DATA = ['data_inicio', 'data_termino'];
 
     /**
-     * Cria (id null) ou atualiza um ciclo.
-     *
      * @param array<string,mixed> $dados Campos crus vindos do formulario.
      * @throws DadosInvalidosException Com o mapa campo => mensagem.
      * @throws RuntimeException Se o id informado nao existe.
@@ -46,22 +43,46 @@ final class CicloService
         return $ciclo;
     }
 
-    private function encontrarOuCriar(?int $id): Ciclo
+    /**
+     * @return Collection<int,Ciclo>
+     */
+    public function listar(): Collection
     {
-        if ($id === null) {
-            return new Ciclo();
-        }
+        return Ciclo::query()->maisRecente()->get();
+    }
 
-        $ciclo = Ciclo::findById($id);
+    /**
+     * @throws RuntimeException Se o id nao aponta para um ciclo.
+     */
+    public function encontrar(?int $id): Ciclo
+    {
+        $ciclo = $id === null ? null : Ciclo::findById($id);
 
         if ($ciclo === null) {
-            throw new RuntimeException("Ciclo {$id} nao encontrado.");
+            throw new RuntimeException('Ciclo ' . ($id ?? '?') . ' nao encontrado.');
         }
 
         return $ciclo;
     }
 
-    /** Sem nome digitado, o ciclo se chama pelo numero. */
+    /**
+     * @throws RuntimeException Se o id nao aponta para um ciclo.
+     */
+    public function excluir(?int $id): Ciclo
+    {
+        $ciclo = $this->encontrar($id);
+
+        $ciclo->delete();
+
+        return $ciclo;
+    }
+
+    private function encontrarOuCriar(?int $id): Ciclo
+    {
+        return $id === null ? new Ciclo() : $this->encontrar($id);
+    }
+
+    
     private function nomeOuPadrao(Ciclo $ciclo): string
     {
         $nome = trim((string) $ciclo->nome);
@@ -108,10 +129,6 @@ final class CicloService
         }
     }
 
-    /**
-     * Mesmo numero no mesmo ano. O scope de exclusao logica ja tira os apagados,
-     * entao um ciclo excluido nao bloqueia o cadastro de outro igual.
-     */
     private function jaExiste(Ciclo $ciclo): bool
     {
         return Ciclo::query()
