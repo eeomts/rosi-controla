@@ -19,3 +19,6 @@ config.ini
 
 #dados do docker
 /data/
+
+#anotacoes
+deploy/info/

@@ -14,10 +14,7 @@ services:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_unicode_ci
     volumes:
-      # bind mount, NAO volume gerenciado: docker volume prune nao enxerga
-      # diretorio do host
       - ./data/mysql:/var/lib/mysql
-      # roda uma unica vez, quando ./data/mysql esta vazio
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
@@ -35,7 +32,6 @@ services:
       db:
         condition: service_healthy
     volumes:
-      # as senhas de verdade ficam fora da imagem e fora do git
       - ./deploy/config.ini:/var/www/html/app/Controla/config/config.ini:ro
       - ./data/logs:/var/www/html/app/Controla/logs
 
