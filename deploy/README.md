@@ -44,6 +44,36 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d controla.SEU-DOMINIO.com
 ```
 
+## Testar em container ANTES de ir para a VPS
+
+Roda a mesma imagem, com banco e projeto separados dos de producao:
+
+```sh
+cp deploy/env.example .env                          # se ainda nao existir
+cp deploy/dev/config.ini.example deploy/dev/config.ini
+docker run --rm -v "$PWD":/app -w /app php:8.2-cli php deploy/cubo-encode.php "controla"
+
+docker compose -f docker-compose.yml -f deploy/dev/compose.yml up -d --build
+```
+
+Abre em <http://localhost:8001>. O `-f` duplo e obrigatorio: o override **nao**
+se chama `docker-compose.override.yml` justamente para nao entrar sozinho na VPS.
+
+O que o modo dev muda:
+
+| | producao | dev |
+|---|---|---|
+| projeto | `controla` | `controla-dev` |
+| dados | `./data/mysql` | `./data/dev-mysql` |
+| banco exposto | nao | `127.0.0.1:13306` (para o DataGrip) |
+| `src/`, `views/`, `public/` | dentro da imagem | bind mount do host |
+| php.ini | erro no log | erro na tela, opcache revalidando |
+
+Com o bind mount, editar `src/` ou `views/` reflete no proximo F5 -- sem
+rebuild. Mudou `composer.json` ou o Dockerfile, ai sim `up -d --build`.
+
+Para derrubar so o dev: `docker compose -f docker-compose.yml -f deploy/dev/compose.yml down`.
+
 ## Atualizar
 
 ```sh
@@ -104,7 +134,12 @@ sudo systemctl enable --now controla controla-watchdog.timer
 6. **O `cuboEncode` passa por `cleanSpecialChars`**: senha com caractere exotico
    pode nao voltar igual. O `deploy/cubo-encode.php` confere o round-trip e
    avisa; se avisar, troque a senha.
-7. **Crie o `deploy/config.ini` ANTES do primeiro `up`.** Se o arquivo nao
+7. **No Windows, porta pode estar RESERVADA sem estar em uso.** O Hyper-V
+   reserva faixas inteiras; o bind falha com `An attempt was made to access a
+   socket in a way forbidden by its access permissions`. Ver as faixas com
+   `netsh interface ipv4 show excludedportrange protocol=tcp` e escolher uma
+   fora delas (`PORTA_DB_LOCAL` / `PORTA_LOCAL` no `.env`).
+8. **Crie o `deploy/config.ini` ANTES do primeiro `up`.** Se o arquivo nao
    existir, o docker cria um DIRETORIO com esse nome no lugar dele e a
    aplicacao quebra de um jeito confuso. Se acontecer: `rm -rf
    deploy/config.ini`, copie o example de novo e suba outra vez.

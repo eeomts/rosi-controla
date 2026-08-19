@@ -1,0 +1,27 @@
+name: controla-dev
+
+services:
+
+  db:
+    ports:
+
+      - "127.0.0.1:${PORTA_DB_LOCAL:-13306}:3306"
+    volumes:
+
+      - ./data/dev-mysql:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+  app:
+    volumes:
+      - ./deploy/dev/config.ini:/var/www/html/app/Controla/config/config.ini:ro
+      - ./deploy/dev/php.ini:/usr/local/etc/php/conf.d/controla.ini:ro
+
+      - ./app/Controla/src:/var/www/html/app/Controla/src
+      - ./app/Controla/views:/var/www/html/app/Controla/views
+      - ./app/Cubo2/src:/var/www/html/app/Cubo2/src
+      - ./data/logs:/var/www/html/app/Controla/logs
+
+  web:
+
+    volumes:
+      - ./public:/var/www/html/public:ro
