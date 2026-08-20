@@ -5,11 +5,7 @@ namespace Controla\Controllers;
 use Controla\Models\Ciclo;
 use Controla\Services\CicloService;
 use Controla\Utils\Exceptions\DadosInvalidosException;
-use Controla\Utils\Flash;
 use Controla\Utils\Redirecionamento;
-use Controla\Utils\Request;
-use Controla\Views\PaginaView;
-use Cubo\Controller;
 use Cubo\Tools\Date;
 use RuntimeException;
 
@@ -17,22 +13,17 @@ use RuntimeException;
  * @package Controla
  * @author Mateus - github.com/eeomts
  */
-final class CicloController extends Controller
+final class CicloController extends FeatureController
 {
     private const URL_LISTA = '/ciclo';
 
-    /** @var list<string> Campos que voltam para o form quando a validacao falha. */
-    private const CAMPOS = ['nome', 'num_ciclo', 'num_ano', 'data_inicio', 'data_termino'];
+    protected const CAMPOS = ['nome', 'num_ciclo', 'num_ano', 'data_inicio', 'data_termino'];
 
     private CicloService $service;
-    private Request $request;
-    private Flash $flash;
 
-    public function initialize(): void
+    protected function iniciar(): void
     {
         $this->service = new CicloService();
-        $this->request = Request::daGlobal($this->_route);
-        $this->flash = Flash::daGlobal();
     }
 
     public function index(): void
@@ -116,20 +107,6 @@ final class CicloController extends Controller
         ]);
     }
 
-    /**
-     * @param array<string,mixed> $params
-     */
-    private function pagina(string $titulo, string $template, array $params = []): void
-    {
-        $this->_view->addParam('titulo', $titulo);
-
-        foreach ($params as $chave => $valor) {
-            $this->_view->addParam($chave, $valor);
-        }
-
-        $this->_view->addChild(new PaginaView($template));
-    }
-
     /** @return array<string,string> */
     private function valoresDe(Ciclo $ciclo): array
     {
@@ -140,23 +117,5 @@ final class CicloController extends Controller
             'data_inicio' => $ciclo->data_inicio?->format('Y-m-d') ?? '',
             'data_termino' => $ciclo->data_termino?->format('Y-m-d') ?? '',
         ];
-    }
-
-    /** @return array<string,string> */
-    private function valoresDigitados(): array
-    {
-        $valores = [];
-
-        foreach (self::CAMPOS as $campo) {
-            $valores[$campo] = $this->request->texto($campo);
-        }
-
-        return $valores;
-    }
-
-    /** @return array<string,string> */
-    private function valoresVazios(): array
-    {
-        return array_fill_keys(self::CAMPOS, '');
     }
 }

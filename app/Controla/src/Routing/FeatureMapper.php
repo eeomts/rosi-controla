@@ -5,6 +5,7 @@ namespace Controla\Routing;
 use Cubo\Controller;
 use Cubo\Exceptions\ControllerNotFoundException;
 use Cubo\Routing\Route;
+use ReflectionClass;
 
 /**
  * Traduz a rota no controlador da feature.
@@ -21,7 +22,8 @@ final class FeatureMapper
 
     /**
      * @return class-string<Controller>
-     * @throws ControllerNotFoundException Se a feature nao existe ou nao e um Controller.
+     * @throws ControllerNotFoundException Se a feature nao existe, nao e um Controller
+     *                                     ou e apenas um molde abstrato.
      */
     public function controllerClass(Route $route): string
     {
@@ -29,6 +31,11 @@ final class FeatureMapper
         $class = self::NAMESPACE_CONTROLLERS . $feature . 'Controller';
 
         if (!class_exists($class) || !is_subclass_of($class, Controller::class)) {
+            throw ControllerNotFoundException::for($class);
+        }
+
+        // a URL /feature acha a FeatureController; instanciar o molde e erro fatal
+        if ((new ReflectionClass($class))->isAbstract()) {
             throw ControllerNotFoundException::for($class);
         }
 
