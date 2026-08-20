@@ -49,6 +49,16 @@ final class ControlaSchema
             $table->integer('deleted')->default(0);
         });
 
+        $schema->dropIfExists('cliente');
+        $schema->create('cliente', function (Blueprint $table): void {
+            $table->increments('id');
+            $table->string('nome', 120);
+            $table->string('telefone', 20)->nullable();
+            $table->timestamp('created')->nullable();
+            $table->timestamp('updated')->nullable();
+            $table->integer('deleted')->default(0);
+        });
+
         $schema->dropIfExists('ciclo');
         $schema->create('ciclo', function (Blueprint $table): void {
             $table->increments('id');
